@@ -1,0 +1,276 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MeiLeLe19
+  Date: 2016/10/8
+  Time: 17:14
+  To change this template use File | Settings | File Templates.
+--%>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<head>
+    <%--    <meta http-equiv="refresh" content="2">--%>
+    <title>新增的页面</title>
+    <script type="text/javascript" src="../../js/jquery-3.0.0.js"></script>
+    <style>
+
+        #bg {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.80;
+            opacity: .80;
+            filter: alpha(opacity=80);
+        }
+
+        #show {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 22%;
+            width: 60%;
+            height: 49%;
+            padding: 8px;
+            border: 8px solid #E8E9F7;
+            background-color: white;
+            z-index: 1002;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        function showdiv() {
+            document.getElementById("bg").style.display = "block";
+            document.getElementById("show").style.display = "block";
+
+        }
+        function hidediv() {
+            document.getElementById("bg").style.display = 'none';
+            document.getElementById("show").style.display = 'none';
+            location.reload();
+        }
+        /*隐藏表的增加*/
+        $(function () {
+            $("#zeng").click(function () {
+                $.post("detailadd", {
+                    "picurl": $("#adpicurl").val(),
+                    "pictitle": $("#adpictitle").val(),
+                    "picdesc": $("#adpicdesc").val(),
+                    "picid": $("#adpicid").val()
+                }, function (data) {
+
+                    if (data == true) {
+
+                        alert("新增成功！")
+                        location.reload();
+                        /*   window.close();*/
+                    } else {
+                        alert("新增失败！")
+                        location.reload();
+                    }
+
+                });
+            });
+        });
+
+        function returnDele(op) {
+            location.href = "deletedeta?detailid=" + op;
+
+        }
+
+        function openwin() {
+            window.open("todetailadd", "newwindow", "height=500, width=700,top=100,left=350, toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+
+        }
+
+
+    </script>
+    <script>
+        /*实际表的新增*/
+        $(function () {
+            $("#save").click(function () {
+                $.post("picadd", {
+                    "picname": $("#picname").val(),
+                    "bigpic": $("#bigpic").val(),
+                    "picdesc": $("#picdesc").val(),
+                    "typeid": $("#typeid").val()
+
+                }, function (data) {
+                    if (data == true) {
+                        alert("新增成功！")
+                        location.reload();
+                        /* location = "piclist";*/
+                    } else {
+                        alert("新增失败！")
+                        location.reload();
+                        /*    location = "piclist";*/
+                    }
+                });
+            });
+        });
+        function returnIndex() {
+            location = "piclist";
+        }
+        $(function () {
+            $(".dele").click(function () {
+                if (confirm("您确认删除吗？")) {
+                    var dtid = $(this).attr("title");
+                    $.post("deletedeta", {detailid: dtid}, function (data) {
+                        if (data == 1) {
+                            alert("删除成功")
+                            location.reload();
+                        } else {
+                            alert("删除失败")
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+        });
+
+
+    </script>
+</head>
+<body>
+<h2 align="center">这是一个新增的页面</h2>
+
+<table style="width: 60%;" align="center" class="table table-striped table-bordered table-hover ">
+    <tr>
+        <td height="41" colspan="2"><strong>基本信息</strong></td>
+    </tr>
+    <tr>
+        <td width="83" height="41" align="right">*名称：</td>
+        <td width="392">
+            <input type="text" name="picname" id="picname"></td>
+    </tr>
+    <tr>
+        <td height="61" align="right"><label><em>*</em>所属分类</label>
+             
+        </td>
+        <td>
+            <select name="typeid" id="typeid">
+                <c:forEach items="${plis}" var="p">
+                    <option selected="selected" value="${p.typeid}">${p.typename}</option>
+                </c:forEach>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td height="44" align="right"><em>*</em>图文封面</td>
+        <td><input type="text" name="bigpic" id="bigpic"></td>
+    </tr>
+    <tr align="right">
+        <td height="47" colspan="2" align="left"><strong>套图详情</strong></td>
+    </tr>
+    <tr>
+        <td height="68" align="right"><em>*</em>套图介绍</td>
+        <td>
+
+            <input name="picdesc" id="picdesc" cols="45" rows="5">
+        </td>
+    </tr>
+    <tr>
+        <td height="72"><em>*</em>上传图片</td>
+
+        <td colspan="2">
+            <c:forEach items="${addlist}" var="add">
+                <input type="text" value="${add.picurl}">
+
+                <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
+                <button class="btn btn-primary" title="${add.detailid}">编辑</button>
+            </c:forEach>
+            <%--<input type="button" class="btn btn-success" value="增加" onClick="openwin()">--%>
+        </td>
+    </tr>
+    <%--     <input type="button" value="删除" >--%>
+    <%--  <c:forEach items="${delelist}" var="de">
+          <button class="danger" title="${de.detailid}">删除</button>
+      </c:forEach>--%>
+    <%--     <button onclick="returnDele(${delelist.detailid[0]})" >删除</button>
+         ${sessionScope.shoppingCart[0].price}--%>
+
+
+    <tr>
+        <td height="34" colspan="2" align="right">
+            <input id="btnshow" type="button" value="增加" class="btn btn-success" onclick="showdiv();"/>
+            <input type="button" class="btn btn-info" id="sava" value="保存">
+            <input class="btn btn-warning" type="button" id="index" onclick="returnIndex()" value="返回">
+        </td>
+    </tr>
+</table>
+
+<%--下面是第一个隐藏显示层--%>
+<div id="bg">
+    <%-- 隐藏的DIV，显示--%>
+</div>
+<div id="show">
+
+    <form name="form1" method="post" action="">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="right">
+                    <%-- <input type="button" name="button" id="button" value="关闭">--%>
+                    <input id="btnclose" type="button" class="btn btn-danger" value="关闭" onclick="hidediv()"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <h2 align="center">新增到详细信息表里的图片的url操作</h2>
+    <table style="width: 60%;" align="center" class="table table-striped table-bordered table-hover ">
+        <tr>
+            <td width="100" height="63" align="right">图片的来源:</td>
+            <td><input type="text" name="adpicurl" id="adpicurl"></td>
+        </tr>
+        <tr>
+            <td height="64" align="right">图片的标题：</td>
+            <td><input type="text" name="adpictitle" id="adpictitle"></td>
+        </tr>
+        <tr>
+            <td height="58" align="right">图片的名字：</td>
+            <td>
+
+
+                <select name="adpicid" id="adpicid">
+                    <c:forEach items="${plist}" var="lis">
+                        <option value="${lis.picid}">
+                                ${lis.picname}
+                        </option>
+                    </c:forEach>
+                </select>
+
+
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td height="39" colspan="2" align="right">
+                <input class="btn btn-success" type="button" id="zeng" value="增加">
+                <%--<input id="btnclose" type="button" class="zeng btn btn-success" value="增加" onclick="hidediv()"/>--%>
+            </td>
+        </tr>
+
+    </table>
+
+
+    <%--隐藏的div，结束--%>
+</div>
+</body>
+</html>

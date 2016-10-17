@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinguangfeng.dao.mapper.PictureMapper">
+
+    <sql id="pictureBaseColumnSql">
+        picid,
+        picname,
+        bigpic,
+        smallpic,
+        pictime,
+
+        typeid
+    </sql>
+
+    <sql id="pictureBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="map.picid!=null">
+                    picture.picid = #{map.picid}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.picname)">
+                    AND picture.picname = #{map.picname}
+                </if>
+
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.bigpic)">
+                    AND picture.bigpic = #{map.bigpic}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.smallpic)">
+                    AND picture.smallpic = #{map.smallpic}
+                </if>
+
+                <if test="map.typeid!=null">
+                    AND picture.typeid = #{map.typeid}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pictime)">
+                    AND picture.pictime = #{map.pictime}
+                </if>
+
+
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertPicture" parameterType="com.qinguangfeng.dao.entity.Picture">
+        INSERT INTO picture(
+        <include refid="pictureBaseColumnSql"/>
+        )VALUES(
+        #{picid},
+        #{picname},
+        CURRENT_DATE(),
+        #{bigpic},
+        #{smallpic},
+
+        #{typeid}
+        )
+    </insert>
+
+    <delete id="deletePictureByPicid" parameterType="Integer">
+        DELETE FROM picture WHERE picid = #{picid}
+    </delete>
+
+    <update id="updatePictureDele" parameterType="Integer">
+
+          UPDATE picture SET picture.logicdele=0 WHERE picture.picid=#{picid}
+    </update>
+
+
+    <update id="updatePicture" parameterType="com.qinguangfeng.dao.entity.Picture">
+        UPDATE picture
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(picname)">
+                picname = #{picname} ,
+            </if>
+
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(bigpic)">
+                bigpic = #{bigpic} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(smallpic)">
+                smallpic = #{smallpic} ,
+            </if>
+
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pictime)">
+                pictime = #{pictime} ,
+            </if>
+            <if test="typeid != null">
+                typeid = #{typeid} ,
+            </if>
+
+        </set>
+        WHERE picid = #{picid}
+    </update>
+
+    <select id="searchPictureByParams" parameterType="map" resultMap="pictureMap">
+        SELECT
+        <include refid="pictureBaseColumnSql"/>
+        FROM picture
+        <include refid="pictureBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.qinguangfeng.dao.entity.Picture" id="pictureMap">
+        <id column="picid" property="picid"/>
+        <result column="picname" property="picname"/>
+        <result column="pictime" property="pictime"/>
+        <result column="bigpic" property="bigpic"/>
+        <result column="smallpic" property="smallpic"/>
+        <result column="logicdele" property="logicdele"/>
+        <result column="typeid" property="typeid"/>
+
+    </resultMap>
+
+    <select id="searchPictureByParamsTwo" parameterType="map" resultMap="pictureMapTwo">
+        SELECT
+        <include refid="pictureBaseColumnSql"/>
+        FROM picture
+        WHERE
+        picture.logicdele=1
+    </select>
+
+    <resultMap type="com.qinguangfeng.dao.entity.Picture" id="pictureMapTwo">
+        <id column="picid" property="picid"/>
+        <result column="picname" property="picname"/>
+        <result column="pictime" property="pictime"/>
+        <result column="bigpic" property="bigpic"/>
+        <result column="smallpic" property="smallpic"/>
+        <result column="logicdele" property="logicdele"/>
+        <result column="typeid" property="typeid"/>
+
+    </resultMap>
+
+    <select id="searchPictureByParamsThree" parameterType="map" resultMap="pictureMapThree">
+      SELECT
+	picid,
+	picname,
+	bigpic,
+	smallpic,
+	pictime,
+	typeid,
+
+logicdele
+FROM
+	picture
+WHERE
+	picture.logicdele = 1
+    </select>
+
+    <resultMap type="com.qinguangfeng.dao.entity.Picture" id="pictureMapThree">
+        <id column="picid" property="picid"/>
+        <result column="picname" property="picname"/>
+        <result column="pictime" property="pictime"/>
+        <result column="bigpic" property="bigpic"/>
+        <result column="smallpic" property="smallpic"/>
+        <result column="logicdele" property="logicdele"/>
+        <result column="typeid" property="typeid"/>
+
+    </resultMap>
+</mapper>

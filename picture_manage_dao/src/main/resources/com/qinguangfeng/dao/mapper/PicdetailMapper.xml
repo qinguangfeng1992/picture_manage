@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qinguangfeng.dao.mapper.PicdetailMapper">
+
+    <sql id="picdetailBaseColumnSql">
+        detailid,
+        picurl,
+        pictitle,
+        picid,
+        picdesc
+
+
+    </sql>
+
+    <sql id="picdetailBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="map.detailid!=null">
+                    detailid = #{map.detailid}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.picurl)">
+                    AND picurl = #{map.picurl}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.pictitle)">
+                    AND pictitle = #{map.pictitle}
+                </if>
+
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.picdesc)">
+                    AND picdesc = #{map.picdesc}
+                </if>
+
+                <if test="map.picid!=null">
+                    AND picid = #{map.picid}
+                </if>
+
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertPicdetail" parameterType="com.qinguangfeng.dao.entity.Picdetail">
+        INSERT INTO picdetail(
+        <include refid="picdetailBaseColumnSql"/>
+        )VALUES(
+        #{detailid},
+        #{picurl},
+        #{pictitle},
+        #{picid},
+
+        #{picdesc}
+
+
+        )
+    </insert>
+
+
+    <delete id="deletePicdetailByDetailid" parameterType="Integer">
+        DELETE FROM picdetail WHERE detailid = #{detailid}
+    </delete>
+
+    <update id="updatePicdetail" parameterType="com.qinguangfeng.dao.entity.Picdetail">
+        UPDATE picdetail
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(picurl)">
+                picurl = #{picurl} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(pictitle)">
+                pictitle = #{pictitle} ,
+            </if>
+
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(picdesc)">
+                picdesc = #{picdesc} ,
+            </if>
+            <if test="picid!=null">
+                picid = #{picid} ,
+            </if>
+
+
+        </set>
+        WHERE detailid = #{detailid}
+    </update>
+
+    <select id="searchPicdetailByParams" parameterType="map" resultMap="picdetailMap">
+        SELECT
+        <include refid="picdetailBaseColumnSql"/>
+        FROM picdetail
+        <include refid="picdetailBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.qinguangfeng.dao.entity.Picdetail" id="picdetailMap">
+        <id column="detailid" property="detailid"/>
+        <result column="picurl" property="picurl"/>
+        <result column="pictitle" property="pictitle"/>
+        <result column="picid" property="picid"/>
+        <result column="picdesc" property="picdesc"/>
+    </resultMap>
+
+
+    <select id="findPicdetailByLogic" resultType="com.qinguangfeng.dao.entity.Picdetail">
+
+SELECT
+	picurl,
+	detailid,
+	pictitle,
+picid,
+	picdesc
+FROM
+	picdetail
+WHERE
+	addlogic = 1
+
+    </select>
+</mapper>

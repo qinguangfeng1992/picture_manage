@@ -1,0 +1,7 @@
+*.iml
+/.idea/
+/target/
+/picture_manage_dao/target/
+/picture_manage_web/target/
+picture_manage_dao/src/test/
+

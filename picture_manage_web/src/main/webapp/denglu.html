@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!--<script>
+      function onpenwindow(){
+        window.open("register.html","newwindow","height=500, width=700,top=100,left=350, toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+
+      }
+    </script>-->
+    <style>
+        .ziti {
+            vertical-align: middle;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+</head>
+<body>
+<h1 align="center">这是一个登录页面</h1>
+<form action="login" method="post">
+    <table width="48%" align="center" class="table ziti table-striped table-bordered table-hover " style="width: 37%;">
+        <tr>
+            <td height="22" colspan="2" align="right">&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="17" height="52" align="right">用户名：</td>
+            <td width="247">
+                <input type="text" name="username" id="username"></td>
+        </tr>
+        <tr>
+            <td height="60" align="right">密码：</td>
+            <td><input type="password" name="password" id="pwd"></td>
+        </tr>
+        <tr>
+            <td height="47" colspan="2" align="right">
+
+                <input type="submit" class="btn btn-warning" value="登录">
+                <a type="button" class="btn btn-primary" href="register.html">注册</a>
+            </td>
+
+
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
