@@ -52,10 +52,40 @@
             z-index: 1002;
             overflow: hidden;
         }
+
+        #bgtwo {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.80;
+            opacity: .80;
+            filter: alpha(opacity=80);
+        }
+
+        #showtwo {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 22%;
+            width: 60%;
+            height: 49%;
+            padding: 8px;
+            border: 8px solid #E8E9F7;
+            background-color: white;
+            z-index: 1002;
+            overflow: hidden;
+        }
     </style>
+
+
     <script>
         function showdiv() {
-            document.getElementById("bg").style.display = "block";
+           document.getElementById("bg").style.display = "block";
             document.getElementById("show").style.display = "block";
 
         }
@@ -64,7 +94,8 @@
             document.getElementById("show").style.display = 'none';
             location.reload();
         }
-        /*隐藏表的增加*/
+
+        /*隐藏表的增加的 Ajax*/
         $(function () {
             $("#zeng").click(function () {
                 $.post("detailadd", {
@@ -97,11 +128,7 @@
             window.open("todetailadd", "newwindow", "height=500, width=700,top=100,left=350, toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
 
         }
-
-
-    </script>
-    <script>
-        /*实际表的新增*/
+        /*实际表的新增的 AJAX*/
         $(function () {
             $("#save").click(function () {
                 $.post("picadd", {
@@ -126,6 +153,8 @@
         function returnIndex() {
             location = "piclist";
         }
+
+        /*        新增出来的图片的删除ajax*/
         $(function () {
             $(".dele").click(function () {
                 if (confirm("您确认删除吗？")) {
@@ -143,9 +172,45 @@
             });
 
         });
+        function showdivtwo(deatilid) {
 
+            document.getElementById("bgtwo").style.display = "block";
+            document.getElementById("showtwo").style.display = "block";
+            $.post("picedetail_edit",{detailid:deatilid},function(data){
 
+                $("#xiudetailid").val(data.detailid);
+                $("#xiupicurl").val(data.picurl);
+                $("#xiupictitle").val(data.pictitle);
+                $("#xiupicdesc").val(data.picdesc);
+            });
+        }
+        function hidedivtwo() {
+            document.getElementById("bgtwo").style.display = 'none';
+            document.getElementById("showtwo").style.display = 'none';
+            location.reload();
+        }
+        $(function () {
+            $("#xiugai").click(function () {
+                $.post("doeditdeta", {
+                    "picurl": $("#xiupicurl").val(),
+                    "pictitle": $("#xiupictitle").val(),
+                    "detailid": $("#xiudetailid").val(),
+                    "picdesc": $("#xiupicdesc").val()
+                }, function (data) {
+                    if (data == 1) {
+                        alert("修改成功！")
+                        location.reload();
+                        /*       window.close();*/
+                    } else {
+                        alert("修改失败！")
+                        location.reload();
+
+                    }
+                });
+            });
+        });
     </script>
+
 </head>
 <body>
 <h2 align="center">这是一个新增的页面</h2>
@@ -194,7 +259,11 @@
                 <input type="text" value="${add.picurl}">
 
                 <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
-                <button class="btn btn-primary" title="${add.detailid}">编辑</button>
+               <%-- <button class="btn btn-primary" title="${add.detailid}">编辑</button>--%>
+
+                <button id="btnshowtwo" type="button" class="btn btn-primary" onclick="showdivtwo(${add.detailid})">
+                    编辑
+                </button>
             </c:forEach>
             <%--<input type="button" class="btn btn-success" value="增加" onClick="openwin()">--%>
         </td>
@@ -210,7 +279,7 @@
     <tr>
         <td height="34" colspan="2" align="right">
             <input id="btnshow" type="button" value="增加" class="btn btn-success" onclick="showdiv();"/>
-            <input type="button" class="btn btn-info" id="sava" value="保存">
+            <input type="button" class="btn btn-info" id="save" value="保存">
             <input class="btn btn-warning" type="button" id="index" onclick="returnIndex()" value="返回">
         </td>
     </tr>
@@ -271,6 +340,82 @@
 
 
     <%--隐藏的div，结束--%>
+</div>
+
+
+<%--第二个隐藏显示开始--%>
+
+
+
+
+<div id="bgtwo">
+
+</div>
+<%--detailedit.jsp页面上的DIV，展示的--%>
+<div id="showtwo">
+
+    <form name="form2" method="post" action="">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="right">
+                    <%-- <input type="button" name="button" id="button" value="关闭">--%>
+                    <input id="btnclosetwo" type="button" class="btn btn-danger" value="关闭" onclick="hidedivtwo()"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+    <h2 align="center">这是一个编辑套图的页面111</h2>
+    <table style="width: 60%;" align="center" class="table table-striped table-bordered table-hover ">
+        <tr>
+            <td height="49" colspan="2"><strong>套图详情</strong></td>
+        </tr>
+        <tr>
+            <td height="48"><em>*</em>上传图片 
+            </td>
+            <td>
+                <input type="hidden" name="xiudetailid" id="xiudetailid" value="">
+                <input type="text" name="xiupicurl" id="xiupicurl" value="">
+            </td>
+        </tr>
+        <tr>
+            <td height="48"><em>*</em>套图标题
+            </td>
+            <td>
+                <input type="text" name="xiupictitle" id="xiupictitle" value="">
+            </td>
+        </tr>
+        <tr>
+            <td height="43"><em>*</em>套图介绍</td>
+            <td>
+                <%-- 注意啦！！delist是单个对象，而不是一组值，所以没必要用循环处理！晕死--%>
+                <input type="text" name="xiupicdesc" id="xiupicdesc" value="">
+            </td>
+        </tr>
+
+        <%-- <tr>
+             <td height="44"><em>*</em>图片的名字
+             </td>
+             <td>
+
+                 <select name="typeid" id="typeid">
+                     <c:forEach items="${plist}" var="p">
+                         <c:if test="${delist.picid==p.picid}">
+                             <option selected="selected" value="${delist.picid}">${p.picname}</option>
+                         </c:if>
+                     </c:forEach>
+                 </select>
+             </td>
+         </tr>--%>
+
+
+        <tr>
+            <td height="38" colspan="2" align="right">
+                <input class="btn btn-primary" type="button" id="xiugai" value="修改">
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

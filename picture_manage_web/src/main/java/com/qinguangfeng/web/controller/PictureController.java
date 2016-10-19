@@ -322,6 +322,7 @@ public class PictureController {
             return "redirect:/denglu.html";
         }
 
+
         //这里恐怕也得改！！
         Picdetail delist = detailImpl.serchDetailAll(detailid);
         modelMap.put("delist", delist);
@@ -333,6 +334,30 @@ public class PictureController {
         modelMap.put("plist", plist);
 
         return "detailedit";
+    }
+
+
+    /**杰哥写的！！！！
+     * 套图详情表的编辑的方法1
+     * 根据图片的ID来查询套图的详细信息，
+     *
+     * 最好是把，不同的controller分开来写！
+     * 还有  学会 不仅仅只有页面跳转的方式而已，还有用回调函数的方式来获取数据！
+     *
+     * 要像杰哥那样 写思路！然后按照思路来，一步一步用所学的知识解决。
+     */
+    @RequestMapping("/picedetail_edit")
+    @ResponseBody
+    public Object picedetail_edit(@RequestParam("detailid") Integer detailid,HttpSession session) {
+        //表单验证
+        Object name = session.getAttribute("user");
+        if (name == null) {
+            return "{result:error}";
+        }
+     /*   throw new RuntimeException();*/
+        //通过图片ID获取图片详情的方法
+        return detailImpl.serchDetailAll(detailid);
+
     }
 
     /**

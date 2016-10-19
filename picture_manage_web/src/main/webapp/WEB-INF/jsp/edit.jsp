@@ -30,9 +30,7 @@
 <head>
     <%--    <meta http-equiv="refresh" content="2">--%>
     <style>
-        em {
-            color: red
-        }
+
 
         #bg {
             display: none;
@@ -99,12 +97,37 @@
 
     <script>
 
-        function showdivtwo() {
+        function showdivtwo(deatilid) {
 
             document.getElementById("bgtwo").style.display = "block";
-          /*  location.href="editdetail?detailid=" + op;*/
             document.getElementById("showtwo").style.display = "block";
-//             location.href="editdetail?detailid=" + op;
+            $.post("picedetail_edit",{detailid:deatilid},function(data){
+
+                $("#xiudetailid").val(data.detailid);
+                $("#xiupicurl").val(data.picurl);
+                $("#xiupictitle").val(data.pictitle);
+                $("#xiupicdesc").val(data.picdesc);
+            });
+
+//            $.ajax({
+//                url:"picedetail_edit",
+//                type:"POST",
+//                dataType:'json',
+//                data:{detailid:deatilid},
+//                success:function(data){
+//                $("#xiudetailid").val(data.detailid);
+//                $("#xiupicurl").val(data.picurl);
+//                $("#xiupictitle").val(data.pictitle);
+//                $("#xiupicdesc").val(data.picdesc);
+//                },
+//                error:function(){
+//                    alert("服务器内部错误");
+//                }
+//
+//            });
+
+
+
         }
         function hidedivtwo() {
             document.getElementById("bgtwo").style.display = 'none';
@@ -394,7 +417,7 @@
     </form>
 
 
-    <h2 align="center">这是一个编辑套图的页面</h2>
+    <h2 align="center">这是一个编辑套图的页面111</h2>
     <table style="width: 60%;" align="center" class="table table-striped table-bordered table-hover ">
         <tr>
             <td height="49" colspan="2"><strong>套图详情</strong></td>
@@ -403,24 +426,22 @@
             <td height="48"><em>*</em>上传图片 
             </td>
             <td>
-                <input type="hidden" name="xiudetailid" id="xiudetailid" value="${delist.detailid}">
-                <input type="text" name="xiupicurl" id="xiupicurl" value="${delist.picurl}">
+                <input type="hidden" name="xiudetailid" id="xiudetailid" value="">
+                <input type="text" name="xiupicurl" id="xiupicurl" value="">
             </td>
         </tr>
-
         <tr>
             <td height="48"><em>*</em>套图标题
             </td>
             <td>
-                <input type="text" name="xiupictitle" id="xiupictitle" value="${delist.pictitle}">
+                <input type="text" name="xiupictitle" id="xiupictitle" value="">
             </td>
         </tr>
         <tr>
             <td height="43"><em>*</em>套图介绍</td>
-
             <td>
                 <%-- 注意啦！！delist是单个对象，而不是一组值，所以没必要用循环处理！晕死--%>
-                <input type="text" name="xiupicdesc" id="xiupicdesc" value="${delist.picdesc}">
+                <input type="text" name="xiupicdesc" id="xiupicdesc" value="">
             </td>
         </tr>
 
