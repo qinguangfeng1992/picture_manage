@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,9 +92,6 @@ public class PictureController {
         modelMap.put("currpage", page);
 
 
-
-
-
         List<Pictype> tylist = typeImpl.findTypeAll();
         modelMap.put("tylist", tylist);
         List<Picture> list = pictureImpl.findAll();
@@ -113,6 +111,19 @@ public class PictureController {
         return boo;
     }
 
+
+    @RequestMapping("/pictureadd")
+    @ResponseBody
+    public boolean pictureadd(HttpSession session, String picurl) {
+        List<String> pictureList = (List<String>) session.getAttribute("pictureList");
+        if (pictureList == null) {
+            pictureList = new ArrayList<String>();
+        }
+        pictureList.add(picurl);
+        session.setAttribute("pictureList", pictureList);
+        return true;
+    }
+
     /**
      * 图片信息表的增加的方法2，跳转页面
      */
@@ -126,7 +137,9 @@ public class PictureController {
         }
         //套图详情表的查询全部，根据逻辑增加的条件查询，并存起来？？？这里恐怕要改一下！！
         List<Picdetail> addlist = detailImpl.findLogic();
+
         modelMap.put("addlist", addlist);
+
 
 //图片信息表的查询全部
         List<Picture> plist = pictureImpl.findAll();
@@ -188,8 +201,8 @@ public class PictureController {
 
         return "edit";
     }
+
     /**
-     *
      * 根据detailid来查询单个图片的内容，并且返回给edit.jsp页面
      */
     @RequestMapping("/editpicdetail")
@@ -228,6 +241,7 @@ public class PictureController {
         User user = userImpl.findUserAll(username, password);
         if (user != null) {
             //存到session中
+
             session.setAttribute("user", user);
             /**
              * 这里重定向的不是 shouye的页面哦！
@@ -269,6 +283,16 @@ public class PictureController {
         return boo;
     }
 
+    @RequestMapping("/testadd")
+    public String testAdd(ModelMap modelMap, @RequestParam("picurl") String picurl, @RequestParam("pictitle") String pictitle, @RequestParam("picdesc") String picdesc, @RequestParam("picid") Integer picid) {
+        modelMap.put("picurl", picurl);
+        modelMap.put("pictitle", pictitle);
+        modelMap.put("picdesc", picdesc);
+        modelMap.put("picid", picid);
+        return "add";
+    }
+
+
     /**
      * 套图详情表的增加的方法2，跳转页面
      */
@@ -294,7 +318,6 @@ public class PictureController {
 
     /**
      * 套图详情表删除的方法
-     *
      */
 
     @RequestMapping("/deletedeta")
@@ -337,18 +360,19 @@ public class PictureController {
     }
 
 
-    /**杰哥写的！！！！
+    /**
+     * 杰哥写的！！！！
      * 套图详情表的编辑的方法1
      * 根据图片的ID来查询套图的详细信息，
-     *
+     * <p/>
      * 最好是把，不同的controller分开来写！
      * 还有  学会 不仅仅只有页面跳转的方式而已，还有用回调函数的方式来获取数据！
-     *
+     * <p/>
      * 要像杰哥那样 写思路！然后按照思路来，一步一步用所学的知识解决。
      */
     @RequestMapping("/picedetail_edit")
     @ResponseBody
-    public Object picedetail_edit(@RequestParam("detailid") Integer detailid,HttpSession session) {
+    public Object picedetail_edit(@RequestParam("detailid") Integer detailid, HttpSession session) {
         //表单验证
         Object name = session.getAttribute("user");
         if (name == null) {

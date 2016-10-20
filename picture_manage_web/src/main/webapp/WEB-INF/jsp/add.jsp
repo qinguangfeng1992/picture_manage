@@ -85,7 +85,7 @@
 
     <script>
         function showdiv() {
-           document.getElementById("bg").style.display = "block";
+            document.getElementById("bg").style.display = "block";
             document.getElementById("show").style.display = "block";
 
         }
@@ -96,20 +96,20 @@
         }
 
         /*隐藏表的增加的 Ajax*/
-        $(function () {
+              $(function () {
             $("#zeng").click(function () {
-                $.post("detailadd", {
-                    "picurl": $("#adpicurl").val(),
-                    "pictitle": $("#adpictitle").val(),
-                    "picdesc": $("#adpicdesc").val(),
-                    "picid": $("#adpicid").val()
+                $.post("pictureadd", {
+                    "picurl": $("#adpicurl").val()
+//                    "pictitle": $("#adpictitle").val(),
+//                    "picdesc": $("#adpicdesc").val(),
+//                    "picid": $("#adpicid").val()
                 }, function (data) {
 
-                    if (data == true) {
+               if (data == true) {
 
                         alert("新增成功！")
                         location.reload();
-                        /*   window.close();*/
+                           window.close();
                     } else {
                         alert("新增失败！")
                         location.reload();
@@ -118,6 +118,12 @@
                 });
             });
         });
+
+
+
+
+
+
 
         function returnDele(op) {
             location.href = "deletedeta?detailid=" + op;
@@ -176,7 +182,9 @@
 
             document.getElementById("bgtwo").style.display = "block";
             document.getElementById("showtwo").style.display = "block";
-            $.post("picedetail_edit",{detailid:deatilid},function(data){
+
+
+            $.post("picedetail_edit", {detailid: deatilid}, function (data) {
 
                 $("#xiudetailid").val(data.detailid);
                 $("#xiupicurl").val(data.picurl);
@@ -255,17 +263,27 @@
         <td height="72"><em>*</em>上传图片</td>
 
         <td colspan="2">
-            <c:forEach items="${addlist}" var="add">
-                <input type="text" value="${add.picurl}">
-
-                <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
-               <%-- <button class="btn btn-primary" title="${add.detailid}">编辑</button>--%>
-
-                <button id="btnshowtwo" type="button" class="btn btn-primary" onclick="showdivtwo(${add.detailid})">
-                    编辑
-                </button>
+              <%--<c:forEach items="${addlist}" var="add" varStatus="vs">--%>
+            <c:forEach items="${sessionScope.pictureList}" var="picture">
+             <input type="text" value="${picture}">
+                <button class="dele btn btn-danger" title="${picture}" id="picture_edit">编辑</button>
+                <button class="dele btn btn-danger" title="${picture}" id="picture_delete">删除</button>
+                <br>
             </c:forEach>
-            <%--<input type="button" class="btn btn-success" value="增加" onClick="openwin()">--%>
+          <%--  <input type="text" value="">--%>
+            <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
+                   <%--       <button class="dele btn btn-danger" title="">删除</button>--%>
+             <button class="btn btn-primary" title="${add.detailid}">编辑</button>
+
+             <button id="btnshowtwo" type="button" class="btn btn-primary" onclick="showdivtwo(${add.detailid})">
+                 编辑
+             </button>
+         <%--   <button id="btnshowtwo" type="button" class="btn btn-primary" onclick="showdivtwo()">
+                编辑
+            </button>--%>
+
+             <%--</c:forEach>--%>
+          <%--  <input type="button" class="btn btn-success" value="增加" onClick="openwin()">--%>
         </td>
     </tr>
     <%--     <input type="button" value="删除" >--%>
@@ -284,6 +302,7 @@
         </td>
     </tr>
 </table>
+
 
 <%--下面是第一个隐藏显示层--%>
 <div id="bg">
@@ -343,9 +362,21 @@
 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <%--第二个隐藏显示开始--%>
-
-
 
 
 <div id="bgtwo">
