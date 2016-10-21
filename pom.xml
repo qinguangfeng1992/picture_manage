@@ -18,10 +18,10 @@
         <version>1.3.0.RELEASE</version>
     </parent>
     <!--私服库最好导在最外层的Pom.xml里面-->
-  <!--  <repositories>
+  <repositories>
         <repository>
             <id>nexus</id>
             <url>http://192.168.1.201:8081/nexus/content/groups/public/</url>
         </repository>
-    </repositories>-->
+    </repositories>
 </project>

@@ -265,19 +265,19 @@
         <td colspan="2">
               <%--<c:forEach items="${addlist}" var="add" varStatus="vs">--%>
             <c:forEach items="${sessionScope.pictureList}" var="picture">
-             <input type="text" value="${picture}">
+                <input type="text" value="${picture}">
                 <button class="dele btn btn-danger" title="${picture}" id="picture_edit">编辑</button>
                 <button class="dele btn btn-danger" title="${picture}" id="picture_delete">删除</button>
-                <br>
+
             </c:forEach>
           <%--  <input type="text" value="">--%>
-            <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
-                   <%--       <button class="dele btn btn-danger" title="">删除</button>--%>
+ <%--           <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
+                   &lt;%&ndash;       <button class="dele btn btn-danger" title="">删除</button>&ndash;%&gt;
              <button class="btn btn-primary" title="${add.detailid}">编辑</button>
 
              <button id="btnshowtwo" type="button" class="btn btn-primary" onclick="showdivtwo(${add.detailid})">
                  编辑
-             </button>
+             </button>--%>
          <%--   <button id="btnshowtwo" type="button" class="btn btn-primary" onclick="showdivtwo()">
                 编辑
             </button>--%>

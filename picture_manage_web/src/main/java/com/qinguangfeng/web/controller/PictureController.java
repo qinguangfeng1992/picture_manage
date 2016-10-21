@@ -103,6 +103,7 @@ public class PictureController {
 
     /**
      * 图片信息表的增加方法1，返回Json字符串
+     * 图片信息表的增加方法1，返回Json字符串
      */
     @RequestMapping("/picadd")
     @ResponseBody
@@ -111,17 +112,27 @@ public class PictureController {
         return boo;
     }
 
-
+    /**
+     * 曾超写的，存到Seesion里
+     * @param session
+     * @param picurl 如果属性和 变量名一致的话，比如String picurl，那就没必要再加上@Paragram("picurl")
+     * @return
+     */
     @RequestMapping("/pictureadd")
     @ResponseBody
-    public boolean pictureadd(HttpSession session, String picurl) {
-        List<String> pictureList = (List<String>) session.getAttribute("pictureList");
+        public boolean pictureadd(HttpSession session,String picurl) {
+
+   List<String> pictureList = (List<String>) session.getAttribute("pictureList");
+
         if (pictureList == null) {
             pictureList = new ArrayList<String>();
         }
         pictureList.add(picurl);
-        session.setAttribute("pictureList", pictureList);
-        return true;
+        if(!"".equals(picurl)){
+            session.setAttribute("pictureList", pictureList);
+            return true;
+        }
+        return false;
     }
 
     /**
