@@ -45,7 +45,7 @@
             top: 25%;
             left: 22%;
             width: 60%;
-            height: 49%;
+            height: 60%;
             padding: 8px;
             border: 8px solid #E8E9F7;
             background-color: white;
@@ -73,7 +73,7 @@
             top: 25%;
             left: 22%;
             width: 60%;
-            height: 49%;
+            height: 60%;
             padding: 8px;
             border: 8px solid #E8E9F7;
             background-color: white;
@@ -85,14 +85,14 @@
 
     <script>
         function showdiv() {
-            document.getElementById("bg").style.display = "block";
+      /*      document.getElementById("bg").style.display = "block";*/
             document.getElementById("show").style.display = "block";
 
         }
         function hidediv() {
             document.getElementById("bg").style.display = 'none';
             document.getElementById("show").style.display = 'none';
-            location.reload();
+        /*    location.reload();*/
         }
 
         /*隐藏表的增加的 Ajax*/
@@ -223,7 +223,7 @@
 <body>
 <h2 align="center">这是一个新增的页面</h2>
 
-<table style="width: 60%;" align="center" class="table table-striped table-bordered table-hover ">
+<table style="width: 60%;" align="center" id="pictable" class="table table-striped table-bordered table-hover ">
     <tr>
         <td height="41" colspan="2"><strong>基本信息</strong></td>
     </tr>
@@ -259,17 +259,22 @@
             <input name="picdesc" id="picdesc" cols="45" rows="5">
         </td>
     </tr>
-    <tr>
+    <tr id="ceshi">
         <td height="72"><em>*</em>上传图片</td>
 
-        <td colspan="2">
+       <%-- <td ><input type="text" id="n"></td>--%>
+    </tr>
+
+
               <%--<c:forEach items="${addlist}" var="add" varStatus="vs">--%>
-            <c:forEach items="${sessionScope.pictureList}" var="picture">
+  <%--          <c:forEach items="${sessionScope.pictureList}" var="picture">
                 <input type="text" value="${picture}">
                 <button class="dele btn btn-danger" title="${picture}" id="picture_edit">编辑</button>
                 <button class="dele btn btn-danger" title="${picture}" id="picture_delete">删除</button>
 
-            </c:forEach>
+            </c:forEach>--%>
+
+
           <%--  <input type="text" value="">--%>
  <%--           <button class="dele btn btn-danger" title="${add.detailid}">删除</button>
                    &lt;%&ndash;       <button class="dele btn btn-danger" title="">删除</button>&ndash;%&gt;
@@ -284,8 +289,7 @@
 
              <%--</c:forEach>--%>
           <%--  <input type="button" class="btn btn-success" value="增加" onClick="openwin()">--%>
-        </td>
-    </tr>
+
     <%--     <input type="button" value="删除" >--%>
     <%--  <c:forEach items="${delelist}" var="de">
           <button class="danger" title="${de.detailid}">删除</button>
@@ -320,13 +324,13 @@
             </tr>
         </table>
     </form>
-    <h2 align="center">新增到详细信息表里的图片的url操作</h2>
+    <h2 align="center">新增到详细信息表里的图片的url操作22222</h2>
     <table style="width: 60%;" align="center" class="table table-striped table-bordered table-hover ">
         <tr>
             <td width="100" height="63" align="right">图片的来源:</td>
             <td><input type="text" name="adpicurl" id="adpicurl"></td>
         </tr>
-        <tr>
+        <%--<tr>
             <td height="64" align="right">图片的标题：</td>
             <td><input type="text" name="adpictitle" id="adpictitle"></td>
         </tr>
@@ -345,13 +349,16 @@
 
 
             </td>
-        </tr>
-
+        </tr>--%>
+<%--<tr>
+    <td>Niha</td>
+    <td>Niha</td>
+</tr>--%>
         <tr>
-            <td></td>
+
             <td height="39" colspan="2" align="right">
-                <input class="btn btn-success" type="button" id="zeng" value="增加">
-                <%--<input id="btnclose" type="button" class="zeng btn btn-success" value="增加" onclick="hidediv()"/>--%>
+                <input class="btn btn-success" type="button" id="cun" value="保存">
+               <%-- <input id="btnclose" type="button" class="zeng btn btn-success" value="增加" onclick="hidediv()"/>--%>
             </td>
         </tr>
 
@@ -448,5 +455,26 @@
         </tr>
     </table>
 </div>
+<%--写存到页面的的js代码--%>
+<script>
+    var pic=new Array();
+$(function(){
+   $("#cun").click(function(){
+       var obj={url:$("#adpicurl").val()};
+       pic.push(obj);
+       show();
+   });
+
+
+});
+    function show(){
+       /* $("#ceshi tr:gt(4)").remove();*/
+        for(var i=0;i<pic.length;i++){
+            $("#pictable").appendChild("<tr><td>"+pic[i].url+"</td><td><input type='button' value='编辑' onclick='add()'></td>  </tr>");
+            /*$("table tr:eq(6)").append("<td>"+pic[i].url+"<br></td>");*/
+        }
+      /*  $("table tr:eq(0)").after("<tr><td>c-01</td><td>c-02</td><td>c-03</td><td>c-04</td></tr>");*/
+    }
+</script>
 </body>
 </html>

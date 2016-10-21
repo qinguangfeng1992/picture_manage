@@ -22,10 +22,16 @@
     <td>图片URL</td>
     <td>增加</td>
   </tr>
-
 </table>
 <script src="js/jquery-3.0.0.js"></script>
 <script>
+    function show(){
+        $("#pictable tr:gt(0)").remove();
+        for(var i=0;i<pic.length;i++){
+            $("#pictable").append("<tr><td>"+pic[i].name+"</td><td>"+pic[i].url+"</td><td><input type='button' value='编辑' onclick='add()'></td> </tr>");
+        }
+
+    }
   var pic=new Array();
   $(function(){
     $("#add").click(function(){
@@ -37,17 +43,6 @@
 
   })
 
-  function show(){
-   $("#pictable tr:gt(0)").remove();
-    for(var i=0;i<pic.length;i++){
-      $("#pictable").append("<tr><td>"+pic[i].name+"</td><td>"+pic[i].url+"</td><td><input type='button' value='编辑' onclick='add()'></td> </tr>");
-    }
-
-  }
-
-  function add(){
-    alert();
-  }
 </script>
 
 
