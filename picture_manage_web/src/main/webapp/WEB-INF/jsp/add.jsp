@@ -259,9 +259,9 @@
             <input name="picdesc" id="picdesc" cols="45" rows="5">
         </td>
     </tr>
-    <tr id="ceshi">
-        <td height="72"><em>*</em>上传图片</td>
-
+    <tr >
+        <td height="72" id="ceshi"><em>*</em>上传图片</td>
+        <td></td>
        <%-- <td ><input type="text" id="n"></td>--%>
     </tr>
 
@@ -470,7 +470,9 @@ $(function(){
     function show(){
        /* $("#ceshi tr:gt(4)").remove();*/
         for(var i=0;i<pic.length;i++){
-            $("#pictable").appendChild("<tr><td>"+pic[i].url+"</td><td><input type='button' value='编辑' onclick='add()'></td>  </tr>");
+//            $("#ceshi").append("<td>"+pic[i].url+"</td><td><input type='button' value='编辑' onclick='add()'></td>");
+             $("#ceshi").next().append("<input type='button' value='uui'>");
+            //console.log(a);
             /*$("table tr:eq(6)").append("<td>"+pic[i].url+"<br></td>");*/
         }
       /*  $("table tr:eq(0)").after("<tr><td>c-01</td><td>c-02</td><td>c-03</td><td>c-04</td></tr>");*/
